@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>队列</title>
+</head>
+
+<body>
+    <script>
+        var Queue = function () {
+            var items = []
+            //入队
+            this.enqueue = function (element) {
+                items.push(element)
+            }
+            //出队
+            this.dequeue = function () {
+                return items.shift()
+            }
+            //检查是否为空
+            this.isEmpty = function () {
+                return items.length === 0
+            }
+            //获取队列大小
+            this.size = function () {
+                return items.length
+            }
+            //获取队列
+            this.getQueue = function () {
+                return items
+            }
+
+        }
+        // 优先队列
+        var priority = function () {
+            var items = []
+            //辅助类
+            var node = function (element, priority) {
+                this.element = element
+                this.priority = priority
+            }
+            this.enqueue = function (element, priority) {
+                //队列元素
+                var item = new node(element, priority);
+                if (items.length === 0) {
+                    items.push(item)
+                } else {
+                    var add = false
+                    //循环比较优先级
+                    for (var i = 0; i < items.length; i++) {
+                        if (priority > items[i].priority) {
+                            items.splice(i, 0, item)
+                            add = true
+                            break
+                        }
+                    }
+                    if (!add) {
+                        items.push(item)
+                    }
+                }
+                return items
+            }
+
+        }
+
+        //循环队列
+        function hotPotato(pepoleList, frequency) { //参数：表示人的数组，传花的频率
+            var queue = new Queue();
+            console.log(queue.getQueue())
+            for (var i = 0, len = pepoleList.length; i < len; i++) {
+                queue.enqueue(pepoleList[i]); //初始化，进入队列
+            }
+            var eliminated; //被淘汰的同学
+            while (queue.size() > 1) { //只要队列至少还有两个人，就一直循环
+                for (var i = 0; i < frequency - 1 ; i++) { //出队入队，模拟循环效果
+                    queue.enqueue(queue.dequeue());
+                }
+                eliminated = queue.dequeue(); //清算
+                console.log(eliminated + '被淘汰');
+            }
+            return queue.dequeue(); //返回队列中的最后一人
+        }
+        var pepole = ['Mr.A', 'Mr.B', 'Mr.C', 'Mr.D', 'Mr.E', 'Mr.F'];
+        var gameWinner = hotPotato(pepole, 2);
+        console.log('全场最佳:' + gameWinner);
+    </script>
+</body>
+
+</html>
