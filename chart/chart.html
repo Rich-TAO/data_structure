@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图</title>
+</head>
+<body>
+    <script>
+        var chart = function (){
+            //存储顶点
+            var vertices = []
+            //存储边
+            var edge = {}
+            // 添加顶点
+            this.addVertice = function (v){
+                vertices.push(v)
+                //初始化对应的边
+                edge[v] = []
+            }
+            // 添加边
+            this.addEdge = function (a , b){
+                edge[a].push(b)
+                edge[b].push(a)
+            }
+            // 打印图
+            this.print =  function (){
+                var s = '\n'
+                for(var i = 0; i < vertices.length; i++){
+                    s += vertices[i]
+                    for(var j = 0; j < edge[vertices[i]].length; j++){
+                        s += edge[vertices[i]][j]
+                    }
+                   
+                }
+                s+= '\n'
+                console.log(s)
+                console.log(vertices)
+                console.log(edge);
+                
+            }
+        }
+
+        var a = new chart()
+        a.addVertice('A')
+        a.addVertice('B')
+        a.addVertice('C')
+        a.addVertice('D')
+        a.addVertice('E')
+        a.addEdge('B','C')
+        a.addEdge('A','C','D')
+        a.addEdge('D','C','E','A')
+        a.addEdge('E','C')
+        a.addEdge('C','A')
+
+    </script>
+</body>
+</html>
